@@ -10,8 +10,6 @@ export default function HomeScreen(props) {
 
     const entityRef = firebase.firestore().collection('entities')
     const userID = props.route.params.user.id
-    // console.log("incoming poop")
-    // console.log(userID)
 
     useEffect(() => {
         entityRef
