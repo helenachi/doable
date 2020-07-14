@@ -1,4 +1,4 @@
-Currently following [this tutorial][https://www.freecodecamp.org/news/react-native-firebase-tutorial/] to set up simple login/register and data push/get with Firebase.
+Currently following [this tutorial](https://www.freecodecamp.org/news/react-native-firebase-tutorial/) to set up simple login/register and data push/get with Firebase.
 
 Follow the steps below to get the app running:
 
