@@ -9,7 +9,8 @@ export default function HomeScreen(props) {
     const [entities, setEntities] = useState([])
 
     const entityRef = firebase.firestore().collection('entities')
-    const userID = props.route.params.user.id
+    console.log(props)
+    const userID = props?.extraData?.id
 
     useEffect(() => {
         entityRef
