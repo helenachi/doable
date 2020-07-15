@@ -20,6 +20,7 @@ export default function App() {
     const usersRef = firebase.firestore().collection('users');
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
+        console.log(user.uid)
         usersRef
           .doc(user.uid)
           .get()
@@ -31,6 +32,7 @@ export default function App() {
           .catch((error) => {
             setLoading(false)
           });
+          console.log("user has been updated...")
       } else {
         console.log("no user")
         setLoading(false)
@@ -38,6 +40,7 @@ export default function App() {
     })
     setLoading(false)
   }, []);
+
 
   if (loading) {
     return (
@@ -47,13 +50,16 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
+          { user ? (
             <Stack.Screen name="Home">
-              {props => <HomeScreen {...props} />}
+              {props => <HomeScreen {...props} extraData={user} />}
             </Stack.Screen>
-          </>
+          ) : (
+            <>
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Registration" component={RegistrationScreen} />
+            </>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     );
