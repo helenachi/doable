@@ -20,7 +20,7 @@ export default function App() {
     const usersRef = firebase.firestore().collection('users');
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        console.log(user.uid)
+        // console.log(user.uid)
         usersRef
           .doc(user.uid)
           .get()
@@ -39,7 +39,7 @@ export default function App() {
       }
     })
     setLoading(false)
-  }, []);
+  }, [user]);
 
 
   if (loading) {
@@ -51,13 +51,18 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           { user ? (
-            <Stack.Screen name="Home">
-              {props => <HomeScreen {...props} extraData={user} />}
-            </Stack.Screen>
+            <>
+              <Stack.Screen name="Home">
+                {props => <HomeScreen {...props} extraData={user} />}
+              </Stack.Screen>
+              {/* <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Registration" component={RegistrationScreen} /> */}
+            </>
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Registration" component={RegistrationScreen} />
+              {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
             </>
           )}
         </Stack.Navigator>

@@ -7,13 +7,15 @@ export default function HomeScreen(props) {
 
     const [entityText, setEntityText] = useState('')
     const [entities, setEntities] = useState([])
+    const [user, setUser] = useState(props?.extraData)
 
     const entityRef = firebase.firestore().collection('entities')
-    console.log(props)
+    // console.log(props)
     const userID = props?.extraData?.id
 
     useEffect(() => {
-        entityRef
+        if (user) {
+          entityRef
             .where("authorID", "==", userID)
             .orderBy('createdAt', 'desc')
             .onSnapshot(
@@ -29,7 +31,9 @@ export default function HomeScreen(props) {
                 error => {
                     console.log(error)
                 }
-            )
+            )  
+        }
+
     }, [])
 
     const onAddButtonPress = () => {
@@ -50,6 +54,20 @@ export default function HomeScreen(props) {
                     alert(error)
                 });
         }
+    }
+
+    const onLogoutPress = () => {
+        firebase
+            .auth()
+            .signOut()
+            .then(() => {
+                alert("logged out")
+                setUser(null)
+                props?.navigation?.navigate('Login')
+            })
+            .catch(error => {
+                alert(error)
+            })
     }
 
     const renderEntity = ({item, index}) => {
@@ -78,6 +96,11 @@ export default function HomeScreen(props) {
                     <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
                 <Text>{userID}</Text>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => onLogoutPress()}>
+                    <Text style={styles.buttonTitle}>Log out</Text>
+                </TouchableOpacity>
             </View>
             { entities && (
                 <View style={styles.listContainer}>
