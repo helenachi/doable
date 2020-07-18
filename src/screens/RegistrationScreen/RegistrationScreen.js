@@ -28,7 +28,6 @@ export default function RegistrationScreen({navigation}) {
             };
             const usersRef = firebase.firestore().collection('users')
             usersRef.doc(uid).set(data).then(() => {
-                // navigation.navigate('Home', {user: data})
             }).catch((error) => {
                 alert(error)
             });

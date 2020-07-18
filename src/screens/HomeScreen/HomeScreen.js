@@ -7,10 +7,8 @@ export default function HomeScreen(props) {
 
     const [entityText, setEntityText] = useState('')
     const [entities, setEntities] = useState([])
-    // const [user, setUser] = useState(props?.extraData)
 
     const entityRef = firebase.firestore().collection('entities')
-    // console.log(props)
     const userID = props?.extraData?.id
 
     useEffect(() => {
@@ -57,15 +55,13 @@ export default function HomeScreen(props) {
     }
 
     const onLogoutPress = () => {
+        console.log("Logging out...")
+        console.log(props?.extraData)
         firebase
             .auth()
             .signOut()
             .then(() => {
-                // alert("logged out")
-                // setUser(null)
-                console.log("Logging out..." + props.extraData.user)
                 props.logout()
-                console.log("logged out,  " + props.extraData.user)
             })
             .catch(error => {
                 alert(error)
