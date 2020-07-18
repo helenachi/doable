@@ -32,7 +32,7 @@ export default function App() {
           .catch((error) => {
             setLoading(false)
           });
-          console.log("user has been updated...")
+          // console.log("user has been updated...")
       } else {
         console.log("no user")
         setLoading(false)
@@ -53,7 +53,7 @@ export default function App() {
           { user ? (
             <>
               <Stack.Screen name="Home">
-                {props => <HomeScreen {...props} extraData={user} />}
+                {props => <HomeScreen {...props} logout={() => setUser(null)} extraData={user} />}
               </Stack.Screen>
               {/* <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Registration" component={RegistrationScreen} /> */}

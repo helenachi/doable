@@ -7,14 +7,14 @@ export default function HomeScreen(props) {
 
     const [entityText, setEntityText] = useState('')
     const [entities, setEntities] = useState([])
-    const [user, setUser] = useState(props?.extraData)
+    // const [user, setUser] = useState(props?.extraData)
 
     const entityRef = firebase.firestore().collection('entities')
     // console.log(props)
     const userID = props?.extraData?.id
 
     useEffect(() => {
-        if (user) {
+        if (userID) {
           entityRef
             .where("authorID", "==", userID)
             .orderBy('createdAt', 'desc')
@@ -61,9 +61,11 @@ export default function HomeScreen(props) {
             .auth()
             .signOut()
             .then(() => {
-                alert("logged out")
-                setUser(null)
-                props?.navigation?.navigate('Login')
+                // alert("logged out")
+                // setUser(null)
+                console.log("Logging out..." + props.extraData.user)
+                props.logout()
+                console.log("logged out,  " + props.extraData.user)
             })
             .catch(error => {
                 alert(error)
