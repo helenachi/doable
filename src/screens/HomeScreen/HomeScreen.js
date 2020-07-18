@@ -100,7 +100,7 @@ export default function HomeScreen(props) {
                 <Text>{userID}</Text>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => onLogoutPress()}>
+                    onPress={onLogoutPress}>
                     <Text style={styles.buttonTitle}>Log out</Text>
                 </TouchableOpacity>
             </View>
