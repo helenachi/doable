@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import styles from './styles';
 import { firebase } from '../../firebase/config'
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 export default function HomeScreen(props) {
 
@@ -54,8 +55,6 @@ export default function HomeScreen(props) {
   }
 
   const onLogoutPress = () => {
-    console.log("Logging out...")
-    console.log(props?.extraData)
     firebase
       .auth()
       .signOut()
@@ -77,6 +76,19 @@ export default function HomeScreen(props) {
     )
   }
 
+  const renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "86%",
+          backgroundColor: "#CED0CE",
+          marginLeft: "14%"
+        }}
+      />
+    )
+  }
+
   
   return (
     <View style={styles.container}>
@@ -93,7 +105,7 @@ export default function HomeScreen(props) {
         <TouchableOpacity style={styles.button} onPress={onAddButtonPress}>
           <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
-        <Text>{userID}</Text>
+        {/* <Text>{userID}</Text> */}
         <TouchableOpacity
           style={styles.button}
           onPress={onLogoutPress}>
@@ -107,6 +119,7 @@ export default function HomeScreen(props) {
             renderItem={renderEntity}
             keyExtractor={(item) => item.id}
             removeClippedSubviews={true}
+            ItemSeparatorComponent={renderSeparator}
           />
         </View>
       )}

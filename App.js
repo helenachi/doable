@@ -28,11 +28,6 @@ export default function App() {
           })
           .catch((error) => {
           });
-          console.log("user has been updated...")
-      } else {
-        console.log("no user")
-        console.log(puser)
-        console.log(user)
       }
     })
   }, []);
