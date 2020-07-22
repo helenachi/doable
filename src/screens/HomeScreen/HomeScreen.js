@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, View, Button } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
 import { firebase } from '../../firebase/config'
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
@@ -66,28 +67,40 @@ export default function HomeScreen(props) {
       })
   }
 
+  const onTrashPress = (id) => {
+    entityRef.doc(id).delete().then(function() {
+      alert("document successfully deleted.");
+    }).catch(function(error) {
+      alert(error);
+    });
+  }
+
   const renderEntity = ({item, index}) => {
     return (
       <View style={styles.entityContainer}>
         <Text style={styles.entityText}>
           {index}. {item.text}
         </Text>
+        <TouchableOpacity
+          onPress={console.log("bitch")}>
+          <Ionicons name="ios-trash" onPress={console.log("damn it")} size={20} color="gray" />
+        </TouchableOpacity>
       </View>
     )
   }
 
-  const renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "86%",
-          backgroundColor: "#CED0CE",
-          marginLeft: "14%"
-        }}
-      />
-    )
-  }
+  // const renderSeparator = () => {
+  //   return (
+  //     <View
+  //       style={{
+  //         height: 1,
+  //         width: "86%",
+  //         backgroundColor: "#CED0CE",
+  //         marginLeft: "14%"
+  //       }}
+  //     />
+  //   )
+  // }
 
   
   return (
@@ -105,13 +118,12 @@ export default function HomeScreen(props) {
         <TouchableOpacity style={styles.button} onPress={onAddButtonPress}>
           <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
-        {/* <Text>{userID}</Text> */}
-        <TouchableOpacity
+      </View>
+      <TouchableOpacity
           style={styles.button}
           onPress={onLogoutPress}>
           <Text style={styles.buttonTitle}>Log out</Text>
         </TouchableOpacity>
-      </View>
       { entities && (
         <View style={styles.listContainer}>
           <FlatList
@@ -119,7 +131,7 @@ export default function HomeScreen(props) {
             renderItem={renderEntity}
             keyExtractor={(item) => item.id}
             removeClippedSubviews={true}
-            ItemSeparatorComponent={renderSeparator}
+            // ItemSeparatorComponent={renderSeparator}
           />
         </View>
       )}
