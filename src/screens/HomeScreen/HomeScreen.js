@@ -1,37 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import styles from './styles';
-import { firebase } from '../../firebase/config'
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Button,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "./styles";
+import { firebase } from "../../firebase/config";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 export default function HomeScreen(props) {
+  const [entityText, setEntityText] = useState("");
+  const [entities, setEntities] = useState([]);
 
-  const [entityText, setEntityText] = useState('')
-  const [entities, setEntities] = useState([])
-
-  const entityRef = firebase.firestore().collection('entities')
-  const userID = props?.extraData?.id
+  const entityRef = firebase.firestore().collection("entities");
+  const userID = props?.extraData?.id;
 
   useEffect(() => {
     if (userID) {
       entityRef
         .where("authorID", "==", userID)
-        .orderBy('createdAt', 'desc')
+        .orderBy("createdAt", "desc")
         .onSnapshot(
-            querySnapshot => {
-                const newEntities = []
-                querySnapshot.forEach(doc => {
-                    const entity = doc.data()
-                    entity.id = doc.id
-                    newEntities.push(entity)
-                });
-                setEntities(newEntities)
-            },
-            error => {
-                console.log(error)
-            }
-        )  
+          (querySnapshot) => {
+            const newEntities = [];
+            querySnapshot.forEach((doc) => {
+              const entity = doc.data();
+              entity.id = doc.id;
+              newEntities.push(entity);
+            });
+            setEntities(newEntities);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
-  }, [])
+  }, []);
 
   const onAddButtonPress = () => {
     if (entityText && entityText.length > 0) {
@@ -43,47 +52,59 @@ export default function HomeScreen(props) {
       };
       entityRef
         .add(data)
-        .then(_doc => {
-            setEntityText('')
-            Keyboard.dismiss()
+        .then((_doc) => {
+          setEntityText("");
+          Keyboard.dismiss();
         })
         .catch((error) => {
-            alert(error)
+          alert(error);
         });
     }
-  }
+  };
 
   const onLogoutPress = () => {
-    console.log("Logging out...")
-    console.log(props?.extraData)
     firebase
       .auth()
       .signOut()
       .then(() => {
-          props.logout()
+        props.logout();
       })
-      .catch(error => {
-          alert(error)
-      })
-  }
+      .catch((error) => {
+        alert(error);
+      });
+  };
 
-  const renderEntity = ({item, index}) => {
+  const onTrashPress = (id) => {
+    entityRef
+      .doc(id)
+      .delete()
+      .then(function () {
+        alert("document successfully deleted.");
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+  };
+
+  const renderEntity = ({ item, index }) => {
     return (
       <View style={styles.entityContainer}>
         <Text style={styles.entityText}>
           {index}. {item.text}
         </Text>
+        <TouchableOpacity onPress={() => onTrashPress(item.id)}>
+          <Ionicons name="ios-trash" size={20} color="gray" />
+        </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
-  
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
         <TextInput
           style={styles.input}
-          placeholder='Add new entity'
+          placeholder="Add new entity"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setEntityText(text)}
           value={entityText}
@@ -93,14 +114,11 @@ export default function HomeScreen(props) {
         <TouchableOpacity style={styles.button} onPress={onAddButtonPress}>
           <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
-        <Text>{userID}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={onLogoutPress}>
-          <Text style={styles.buttonTitle}>Log out</Text>
-        </TouchableOpacity>
       </View>
-      { entities && (
+      <TouchableOpacity style={styles.button} onPress={onLogoutPress}>
+        <Text style={styles.buttonTitle}>Log out</Text>
+      </TouchableOpacity>
+      {entities && (
         <View style={styles.listContainer}>
           <FlatList
             data={entities}
@@ -111,5 +129,5 @@ export default function HomeScreen(props) {
         </View>
       )}
     </View>
-  )
+  );
 }
