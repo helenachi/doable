@@ -81,9 +81,8 @@ export default function HomeScreen(props) {
         <Text style={styles.entityText}>
           {index}. {item.text}
         </Text>
-        <TouchableOpacity
-          onPress={console.log("bitch")}>
-          <Ionicons name="ios-trash" onPress={console.log("damn it")} size={20} color="gray" />
+        <TouchableOpacity onPress={() => onTrashPress(item.id)}>
+          <Ionicons name="ios-trash" size={20} color="gray" />
         </TouchableOpacity>
       </View>
     )
