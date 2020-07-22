@@ -1,5 +1,6 @@
 src/firebase/*
 node_modules/**/*
+package-lock.json
 .expo/*
 npm-debug.*
 *.jks
