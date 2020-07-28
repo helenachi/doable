@@ -44,7 +44,17 @@ export default function App() {
       <Stack.Navigator>
         {user ? (
           <>
-            <Stack.Screen name="Dashboard" component={DashboardScreen} />
+            <Stack.Screen name="Dashboard">
+              {(props) => (
+                <DashboardScreen
+                  {...props}
+                  logout={() => {
+                    setUser(null);
+                  }}
+                  extraData={user}
+                />
+              )}
+            </Stack.Screen>
             {/* <Stack.Screen name="Home">
               {(props) => (
                 <HomeScreen
