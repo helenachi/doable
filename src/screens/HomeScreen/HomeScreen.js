@@ -40,6 +40,7 @@ export default function HomeScreen(props) {
           }
         );
     }
+    // console.log(userID);
   }, []);
 
   const onAddButtonPress = () => {
