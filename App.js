@@ -55,17 +55,6 @@ export default function App() {
                 />
               )}
             </Stack.Screen>
-            {/* <Stack.Screen name="Home">
-              {(props) => (
-                <HomeScreen
-                  {...props}
-                  logout={() => {
-                    setUser(null);
-                  }}
-                  extraData={user}
-                />
-              )}
-            </Stack.Screen> */}
           </>
         ) : (
           <>

@@ -9,3 +9,5 @@ export { default as DashboardScreen } from "./DashboardScreen/DashboardScreen";
 export { default as TodayScreen } from "./TodayScreen/TodayScreen";
 
 export { default as CalendarScreen } from "./CalendarScreen/CalendarScreen";
+
+export { default as GoalsScreen } from "./GoalsScreen/GoalsScreen";
