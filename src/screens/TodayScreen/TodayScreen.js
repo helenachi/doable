@@ -14,6 +14,7 @@ export default function TodayScreen(props) {
         Set up a time to catch up with your family and ask about their
         highlights and lowlights for the past week!
       </Text>
+      <Button title="Start Time"></Button>
     </View>
   );
 }

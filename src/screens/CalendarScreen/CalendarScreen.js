@@ -7,36 +7,28 @@ import styles from "./styles";
 import { firebase } from "../../firebase/config";
 
 export default function CalendarScreen(props) {
-  const reading = "red";
-  const relationships = "blue";
-  const fitness = "pink";
+  const goal1 = "#f3c5dc";
+  const goal2 = "#f7d1b6";
+  const goal3 = "#f4e8b2";
 
   return (
     <>
-      <Text>Calendar's Placeholder</Text>
+      {/* <Text>Calendar's Placeholder</Text> */}
       <Calendar
         markingType={"period"}
         markedDates={{
-          "2020-07-20": { textColor: "green" },
-          "2020-07-22": {
-            // startingDay: true,
-            color: "pink",
-          },
-          "2020-07-23": {
-            selected: true,
-            // endingDay: true,
-            color: "green",
-            // textColor: "gray",
-          },
-          "2020-07-04": {
-            disabled: true,
-            // startingDay: true,
-            color: relationships,
-            // endingDay: true,
-          },
-          "2020-06-22": { startingDay: true, color: "pink" },
+          "2020-07-20": { color: goal1 },
+          "2020-07-22": { color: goal2 },
+          "2020-07-23": { color: goal3 },
+          "2020-07-04": { color: goal3 },
+          "2020-06-22": { color: goal1 },
         }}
       />
+      <View style={styles.container}>
+        <View style={styles.circle1}></View>
+        <View style={styles.circle2}></View>
+        <View style={styles.circle3}></View>
+      </View>
     </>
   );
 }
