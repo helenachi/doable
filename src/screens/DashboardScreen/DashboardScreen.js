@@ -15,7 +15,12 @@ export default function DashboardScreen(props) {
 
   return (
     <>
-      <Tab.Navigator>
+      <Tab.Navigator
+        initialRouteName="Goals"
+        tabBarOptions={{
+          activeTintColor: "#4a59a8",
+        }}
+      >
         <Tab.Screen
           name="Today"
           component={TodayScreen}
@@ -30,7 +35,7 @@ export default function DashboardScreen(props) {
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Goals"
           component={GoalsScreen}
           options={{
@@ -38,7 +43,25 @@ export default function DashboardScreen(props) {
               <Ionicons name="ios-star-outline" size={20} color="gray" />
             ),
           }}
-        />
+        /> */}
+        <Tab.Screen
+          name="Goalz"
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="ios-star-outline" size={20} color="gray" />
+            ),
+          }}
+        >
+          {(props) => (
+            <GoalsScreen
+              {...props}
+              logout={() => {
+                setUser(null);
+              }}
+              // extraData={props.extraData.user}
+            />
+          )}
+        </Tab.Screen>
         <Tab.Screen
           name="Calendar"
           component={CalendarScreen}
