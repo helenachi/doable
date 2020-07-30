@@ -7,8 +7,11 @@ import { firebase } from "../../firebase/config";
 
 export default function GoalsScreen(props) {
   return (
-    <>
-      <Text>Goals Screen's Placeholder</Text>
-    </>
+    <View style={styles.container}>
+      <Text style={styles.smallText}>This month's goals</Text>
+      <Text style={styles.top}>Goal #1</Text>
+      <Text style={styles.middle}>Goal #1</Text>
+      <Text style={styles.bottom}>Goal #1</Text>
+    </View>
   );
 }

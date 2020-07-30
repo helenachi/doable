@@ -7,8 +7,13 @@ import { firebase } from "../../firebase/config";
 
 export default function TodayScreen(props) {
   return (
-    <>
-      <Text>Today's Doable Placeholder</Text>
-    </>
+    <View style={styles.container}>
+      <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
+      <Text style={styles.goalText}>Relationships</Text>
+      <Text style={styles.taskText}>
+        Set up a time to catch up with your family and ask about their
+        highlights and lowlights for the past week!
+      </Text>
+    </View>
   );
 }
