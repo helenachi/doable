@@ -11,6 +11,7 @@ import {
 import { firebase } from "./src/firebase/config";
 import { decode, encode } from "base-64";
 import { set } from "react-native-reanimated";
+import { ScreenStack } from "react-native-screens";
 if (!global.btoa) {
   global.btoa = encode;
 }
