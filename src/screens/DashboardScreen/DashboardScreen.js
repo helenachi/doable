@@ -5,18 +5,34 @@ import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
-import { GoalsScreen, TodayScreen, CalendarScreen } from "../index.js";
+import {
+  GoalsScreen,
+  TodayScreen,
+  CalendarScreen,
+  HomeScreen,
+} from "../index.js";
 
 const Tab = createBottomTabNavigator();
 
 export default function DashboardScreen(props) {
-  // const user = props?.extraData?;
-  console.log(props.extraData.id);
+  const TodayComponent = TodayScreen;
+  const GoalComponent = () => {
+    return <GoalsScreen {...props} />;
+  };
+  const HomeComponent = () => {
+    return (
+      <HomeScreen
+        {...props}
+        logout={() => {
+          setUser(null);
+        }}
+      />
+    );
+  };
 
   return (
     <>
       <Tab.Navigator
-        initialRouteName="Goals"
         tabBarOptions={{
           activeTintColor: "#4a59a8",
         }}
@@ -25,7 +41,6 @@ export default function DashboardScreen(props) {
           name="Today"
           component={TodayScreen}
           options={{
-            // tabBarLabel: "tobay",
             tabBarIcon: ({ color, size }) => (
               <Ionicons
                 name="ios-checkmark-circle-outline"
@@ -35,33 +50,24 @@ export default function DashboardScreen(props) {
             ),
           }}
         />
-        {/* <Tab.Screen
-          name="Goals"
-          component={GoalsScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-star-outline" size={20} color="gray" />
-            ),
-          }}
-        /> */}
         <Tab.Screen
-          name="Goalz"
+          name="Goals"
+          component={GoalComponent}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="ios-star-outline" size={20} color="gray" />
             ),
           }}
-        >
-          {(props) => (
-            <GoalsScreen
-              {...props}
-              logout={() => {
-                setUser(null);
-              }}
-              // extraData={props.extraData.user}
-            />
-          )}
-        </Tab.Screen>
+        />
+        <Tab.Screen
+          name="Home"
+          component={HomeComponent}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="ios-star-outline" size={20} color="gray" />
+            ),
+          }}
+        />
         <Tab.Screen
           name="Calendar"
           component={CalendarScreen}
