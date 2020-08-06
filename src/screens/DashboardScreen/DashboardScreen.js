@@ -19,16 +19,6 @@ export default function DashboardScreen(props) {
   const GoalComponent = () => {
     return <GoalsScreen {...props} />;
   };
-  const HomeComponent = () => {
-    return (
-      <HomeScreen
-        {...props}
-        logout={() => {
-          setUser(null);
-        }}
-      />
-    );
-  };
 
   return (
     <>
@@ -53,15 +43,6 @@ export default function DashboardScreen(props) {
         <Tab.Screen
           name="Goals"
           component={GoalComponent}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-star-outline" size={20} color="gray" />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Home"
-          component={HomeComponent}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="ios-star-outline" size={20} color="gray" />
