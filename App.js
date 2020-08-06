@@ -44,41 +44,117 @@ export default function App() {
     });
   }, []);
 
+  const MainComponent = ({ navigation }) => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Dashboard"
+          options={{
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                <Ionicons name="ios-settings" size={20} color="gray" />
+              </TouchableOpacity>
+            ),
+          }}
+        >
+          {(props) => (
+            <DashboardScreen
+              {...props}
+              logout={() => {
+                setUser(null);
+              }}
+              extraData={user}
+            />
+          )}
+        </Stack.Screen>
+      </Stack.Navigator>
+    );
+  };
+
+  const LogoutComponent = () => {
+    return (
+      <TouchableOpacity>
+        <Text>Logout</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <>
-            <Stack.Screen
-              name="Dashboard"
-              options={{
-                headerRight: () => (
-                  <TouchableOpacity
-                    onPress={() => alert("settings button pressed")}
-                  >
-                    <Ionicons name="ios-settings" size={20} color="gray" />
-                  </TouchableOpacity>
-                ),
-              }}
-            >
-              {(props) => (
-                <DashboardScreen
-                  {...props}
-                  logout={() => {
-                    setUser(null);
-                  }}
-                  extraData={user}
-                />
-              )}
-            </Stack.Screen>
-          </>
-        ) : (
-          <>
+      {user ? (
+        <>
+          <Drawer.Navigator>
+            <Drawer.Screen name="Dashboard" component={MainComponent} />
+            {/* <Drawer.Screen name="Logout" component={LogoutComponent} /> */}
+            {/* <Drawer.Item
+              label="Logout"
+              onPress={() =>
+                Alert.alert(
+                  "Log out",
+                  "Do you want to logout?",
+                  [
+                    {
+                      text: "Cancel",
+                      onPress: () => {
+                        console.log("logout cancelled");
+                      },
+                    },
+                    {
+                      text: "Confirm",
+                      onPress: () => {
+                        console.log("logout confirmed");
+                      },
+                    },
+                  ],
+                  { cancelable: false }
+                )
+              }
+            /> */}
+          </Drawer.Navigator>
+        </>
+      ) : (
+        <>
+          <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registration" component={RegistrationScreen} />
-          </>
-        )}
-      </Stack.Navigator>
+          </Stack.Navigator>
+        </>
+      )}
     </NavigationContainer>
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //     {user ? (
+    //       <>
+    //         <Stack.Screen
+    //           name="Dashboard"
+    //           options={{
+    //             headerRight: () => (
+    //               <TouchableOpacity
+    //                 onPress={() => alert("settings button pressed")}
+    //               >
+    //                 <Ionicons name="ios-settings" size={20} color="gray" />
+    //               </TouchableOpacity>
+    //             ),
+    //           }}
+    //         >
+    //           {(props) => (
+    //             <DashboardScreen
+    //               {...props}
+    //               logout={() => {
+    //                 setUser(null);
+    //               }}
+    //               extraData={user}
+    //             />
+    //           )}
+    //         </Stack.Screen>
+    //       </>
+    //     ) : (
+    //       <>
+    //         <Stack.Screen name="Login" component={LoginScreen} />
+    //         <Stack.Screen name="Registration" component={RegistrationScreen} />
+    //       </>
+    //     )}
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
