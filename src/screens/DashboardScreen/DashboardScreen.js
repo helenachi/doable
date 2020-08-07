@@ -15,7 +15,9 @@ import {
 const Tab = createBottomTabNavigator();
 
 export default function DashboardScreen(props) {
-  const TodayComponent = TodayScreen;
+  const TodayComponent = () => {
+    return <TodayScreen {...props} />;
+  };
   const GoalComponent = () => {
     return <GoalsScreen {...props} />;
   };
