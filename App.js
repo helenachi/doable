@@ -81,7 +81,7 @@ export default function App() {
               logout={() => {
                 setUser(null);
               }}
-              extraData={user}
+              user={user}
             />
           )}
         </Stack.Screen>
@@ -89,7 +89,7 @@ export default function App() {
     );
   };
 
-  const MyDrawerContent = (props) => {
+  const SettingsDrawerContent = (props) => {
     return (
       <DrawerContentScrollView
         {...props}
@@ -123,7 +123,7 @@ export default function App() {
     <NavigationContainer>
       {user ? (
         <>
-          <Drawer.Navigator drawerContent={MyDrawerContent}>
+          <Drawer.Navigator drawerContent={SettingsDrawerContent}>
             <Drawer.Screen name="Dashboard" component={MainComponent} />
           </Drawer.Navigator>
         </>

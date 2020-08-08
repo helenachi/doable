@@ -6,6 +6,27 @@ import styles from "./styles";
 import { firebase } from "../../firebase/config";
 
 export default function TodayScreen(props) {
+  console.log("TodayScreen User prop: ");
+  console.log(props.user);
+
+  // const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   const goalsref = firebase.firestore().collection("users");
+  //   firebase.auth().onAuthStateChanged((puser) => {
+  //     if (puser) {
+  //       usersRef
+  //         .doc(puser.uid)
+  //         .get()
+  //         .then((document) => {
+  //           const userData = document.data();
+  //           setUser(userData);
+  //         })
+  //         .catch((error) => {});
+  //     }
+  //   });
+  // }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
