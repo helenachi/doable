@@ -34,24 +34,15 @@ export default function TodayScreen(props) {
     return <AppLoading />;
   } else {
     return (
-      <View>
-        <Text style={{ fontFamily: "Montserrat_400Regular" }}>
-          testing Montserrat_400Regular
+      <View style={styles.container}>
+        <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
+        <Text style={styles.goalText}>Relationships</Text>
+        <Text style={styles.taskText}>
+          Set up a time to catch up with your family and ask about their
+          highlights and lowlights for the past week!
         </Text>
+        <Button title="Start Time"></Button>
       </View>
     );
   }
-
-  // return (
-  //   <View style={styles.container}>
-  //     <Text style={{ fontFamily: "Inter_900Black" }}>Today's{"\n"}Doable</Text>
-  //     <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
-  //     <Text style={styles.goalText}>Relationships</Text>
-  //     <Text style={styles.taskText}>
-  //       Set up a time to catch up with your family and ask about their
-  //       highlights and lowlights for the past week!
-  //     </Text>
-  //     <Button title="Start Time"></Button>
-  //   </View>
-  // );
 }

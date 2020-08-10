@@ -1,9 +1,11 @@
 import { StyleSheet } from "react-native";
+import { Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 
 export default StyleSheet.create({
   titleText: {
     fontSize: 40,
     color: "#333333",
+    fontFamily: "Montserrat_400Regular",
   },
   goalText: {
     fontSize: 15,
