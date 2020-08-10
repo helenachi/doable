@@ -3,14 +3,14 @@ import { Text, TextInput, TouchableOpacity, View, Button } from "react-native";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { Ionicons } from "@expo/vector-icons";
 import { AppLoading } from "expo";
-import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
+import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
 
 export default function TodayScreen(props) {
   console.log("TodayScreen User prop: ");
   console.log(props.user);
-  let [fontsLoaded] = useFonts({ Inter_900Black });
+  let [fontsLoaded] = useFonts({ Montserrat_400Regular });
 
   // const [user, setUser] = useState(null);
 
@@ -35,8 +35,8 @@ export default function TodayScreen(props) {
   } else {
     return (
       <View>
-        <Text style={{ fontFamily: "Inter_900Black" }}>
-          testing inter_900black
+        <Text style={{ fontFamily: "Montserrat_400Regular" }}>
+          testing Montserrat_400Regular
         </Text>
       </View>
     );
