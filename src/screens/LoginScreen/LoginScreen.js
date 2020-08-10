@@ -5,6 +5,7 @@ import { firebase } from "../../firebase/config";
 import styles from "./styles";
 
 export default function LoginScreen({ navigation }) {
+  
   let [fontsLoaded] = useFonts({ Montserrat_400Regular });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
