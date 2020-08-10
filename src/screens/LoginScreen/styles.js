@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
-
+import { AppLoading } from "expo"; import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 export default StyleSheet.create({
+  
   container: {
     flex: 1,
     alignItems: "center",
@@ -23,6 +24,7 @@ export default StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
+    fontFamily: "Montserrat_400Regular",
   },
   button: {
     backgroundColor: "#788eec",
@@ -38,6 +40,7 @@ export default StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: "Montserrat_400Regular",
   },
   footerView: {
     flex: 1,
@@ -47,6 +50,7 @@ export default StyleSheet.create({
   footerText: {
     fontSize: 16,
     color: "#2e2e2d",
+    fontFamily: "Montserrat_400Regular",
   },
   footerLink: {
     color: "#788eec",
