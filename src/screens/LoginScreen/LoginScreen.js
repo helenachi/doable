@@ -3,6 +3,7 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../../firebase/config";
 import styles from "./styles";
+import { AppLoading } from "expo"; import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 
 export default function LoginScreen({ navigation }) {
   let [fontsLoaded] = useFonts({ Montserrat_400Regular });

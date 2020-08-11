@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { AppLoading } from "expo"; import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 export default StyleSheet.create({
   
   container: {
