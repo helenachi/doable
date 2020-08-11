@@ -15,14 +15,17 @@ import {
 const Tab = createBottomTabNavigator();
 
 export default function DashboardScreen(props) {
+  // console.log(props.current);
   const TodayComponent = () => {
-    return <TodayScreen {...props} user={props.user} />;
+    return <TodayScreen {...props} user={props.user} current={props.current} />;
   };
   const GoalComponent = () => {
-    return <GoalsScreen {...props} user={props.user} />;
+    return <GoalsScreen {...props} user={props.user} current={props.current} />;
   };
   const CalendarComponent = () => {
-    return <CalendarScreen {...props} user={props.user} />;
+    return (
+      <CalendarScreen {...props} user={props.user} current={props.current} />
+    );
   };
 
   return (

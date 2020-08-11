@@ -2,47 +2,46 @@ import React, { useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View, Button } from "react-native";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { Ionicons } from "@expo/vector-icons";
-import { AppLoading } from "expo";
-import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
 
 export default function TodayScreen(props) {
-  console.log("TodayScreen User prop: ");
-  console.log(props.user);
-  let [fontsLoaded] = useFonts({ Montserrat_400Regular });
+  const [userGoals, setUserGoals] = useState(null);
 
-  // const [user, setUser] = useState(null);
+  useEffect(() => {
+    const goalsRef = firebase
+      .firestore()
+      .collection("monthly_goals")
+      .doc(props.current);
+    goalsRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          setUserGoals(doc.data()[props.user.id]);
+          console.log("Document data:", userGoals);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+  }, []);
 
-  // useEffect(() => {
-  //   const goalsref = firebase.firestore().collection("users");
-  //   firebase.auth().onAuthStateChanged((puser) => {
-  //     if (puser) {
-  //       usersRef
-  //         .doc(puser.uid)
-  //         .get()
-  //         .then((document) => {
-  //           const userData = document.data();
-  //           setUser(userData);
-  //         })
-  //         .catch((error) => {});
-  //     }
-  //   });
-  // }, []);
+  const randomInt = Math.floor(Math.random() * 3) + 1;
+  const displayGoal = "goal" + randomInt.toString();
+  console.log(displayGoal);
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
-        <Text style={styles.goalText}>Relationships</Text>
-        <Text style={styles.taskText}>
-          Set up a time to catch up with your family and ask about their
-          highlights and lowlights for the past week!
-        </Text>
-        <Button title="Start Time"></Button>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
+      <Text style={styles.goalText}>rando</Text>
+      <Text style={styles.taskText}>
+        Set up a time to catch up with your family and ask about their
+        highlights and lowlights for the past week!
+      </Text>
+      <Button title="Start Time"></Button>
+    </View>
+  );
 }
