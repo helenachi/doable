@@ -30,11 +30,11 @@ export default function GoalsScreen(props) {
             goalColorsRef.get().then(function (doc) {
               if (doc.exists) {
                 setGoalColors(doc.data());
-                console.log("goalColors:", goalColors);
+              } else {
+                console.log("No such document!");
               }
             });
           } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
           }
         })

@@ -32,7 +32,6 @@ export default function CalendarScreen(props) {
             goalColorsRef.get().then(function (doc) {
               if (doc.exists) {
                 setGoalColors(doc.data());
-
                 const markedDatesRef = firebase
                   .firestore()
                   .collection("markedDates")
@@ -40,13 +39,15 @@ export default function CalendarScreen(props) {
                 markedDatesRef.get().then(function (doc) {
                   if (doc.exists) {
                     setUserDates(doc.data()["dates"]);
-                    // console.log("userdates:", userDates);
+                  } else {
+                    console.log("No such document!");
                   }
                 });
+              } else {
+                console.log("No such document!");
               }
             });
           } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
           }
         })
@@ -64,12 +65,7 @@ export default function CalendarScreen(props) {
   } else {
     return (
       <>
-        {/* <Text>Calendar's Placeholder</Text> */}
-        <Calendar
-          markingType={"period"}
-          // 1: #EA6648, 2: #FFA18C, 3: #F7D1B6
-          markedDates={userDates}
-        />
+        <Calendar markingType={"period"} markedDates={userDates} />
         <View style={styles.container}>
           {userGoalKeys.map((goalKey) => {
             return (
@@ -86,9 +82,6 @@ export default function CalendarScreen(props) {
               </View>
             );
           })}
-          {/* <View style={styles.circle1}></View>
-          <View style={styles.circle2}></View>
-          <View style={styles.circle3}></View> */}
         </View>
       </>
     );

@@ -31,10 +31,11 @@ export default function TodayScreen(props) {
               if (doc.exists) {
                 console.log("goalTasks data exists!");
                 setGoalTasks(doc.data());
+              } else {
+                console.log("No such document!");
               }
             });
           } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
           }
         })
