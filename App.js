@@ -45,6 +45,7 @@ const LogoutComponent = (props) => (
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [appGeneral, setAppGeneral] = useState(null);
 
   useEffect(() => {
     const usersRef = firebase.firestore().collection("users");
@@ -60,6 +61,27 @@ export default function App() {
           .catch((error) => {});
       }
     });
+  }, []);
+
+  useEffect(() => {
+    const appDataGeneralRef = firebase
+      .firestore()
+      .collection("appData")
+      .doc("general");
+    appDataGeneralRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          setAppGeneral(doc.data());
+          console.log("Document data:", appGeneral);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
   }, []);
 
   const MainComponent = ({ navigation }) => {
@@ -81,7 +103,8 @@ export default function App() {
               logout={() => {
                 setUser(null);
               }}
-              extraData={user}
+              user={user}
+              current={appGeneral.current_month + "_" + appGeneral.current_year}
             />
           )}
         </Stack.Screen>
@@ -89,7 +112,7 @@ export default function App() {
     );
   };
 
-  const MyDrawerContent = (props) => {
+  const SettingsDrawerContent = (props) => {
     return (
       <DrawerContentScrollView
         {...props}
@@ -123,7 +146,7 @@ export default function App() {
     <NavigationContainer>
       {user ? (
         <>
-          <Drawer.Navigator drawerContent={MyDrawerContent}>
+          <Drawer.Navigator drawerContent={SettingsDrawerContent}>
             <Drawer.Screen name="Dashboard" component={MainComponent} />
           </Drawer.Navigator>
         </>

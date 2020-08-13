@@ -5,30 +5,85 @@ import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
+import { AppLoading } from "expo";
 
 export default function CalendarScreen(props) {
-  const goal1 = "#f3c5dc";
-  const goal2 = "#f7d1b6";
-  const goal3 = "#f4e8b2";
+  const [loading, setLoading] = useState(true);
+  const [userGoals, setUserGoals] = useState(null);
+  const [goalColors, setGoalColors] = useState(null);
+  const [userDates, setUserDates] = useState(null);
+  const userGoalKeys = ["goal1", "goal2", "goal3"];
 
-  return (
-    <>
-      {/* <Text>Calendar's Placeholder</Text> */}
-      <Calendar
-        markingType={"period"}
-        markedDates={{
-          "2020-07-20": { color: goal1 },
-          "2020-07-22": { color: goal2 },
-          "2020-07-23": { color: goal3 },
-          "2020-07-04": { color: goal3 },
-          "2020-06-22": { color: goal1 },
-        }}
-      />
-      <View style={styles.container}>
-        <View style={styles.circle1}></View>
-        <View style={styles.circle2}></View>
-        <View style={styles.circle3}></View>
-      </View>
-    </>
-  );
+  useEffect(() => {
+    if (loading) {
+      const monthlyGoalsRef = firebase
+        .firestore()
+        .collection("monthly_goals")
+        .doc(props.current);
+      monthlyGoalsRef
+        .get()
+        .then(function (doc) {
+          if (doc.exists) {
+            setUserGoals(doc.data()[props.user.id]);
+            const goalColorsRef = firebase
+              .firestore()
+              .collection("appData")
+              .doc("goalColors");
+            goalColorsRef.get().then(function (doc) {
+              if (doc.exists) {
+                setGoalColors(doc.data());
+                const markedDatesRef = firebase
+                  .firestore()
+                  .collection("markedDates")
+                  .doc(props.user.id);
+                markedDatesRef.get().then(function (doc) {
+                  if (doc.exists) {
+                    setUserDates(doc.data()["dates"]);
+                  } else {
+                    console.log("No such document!");
+                  }
+                });
+              } else {
+                console.log("No such document!");
+              }
+            });
+          } else {
+            console.log("No such document!");
+          }
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+      if (userGoals && goalColors && userDates) {
+        setLoading(false);
+      }
+    }
+  }, [userGoals, goalColors, userDates]);
+
+  if (loading) {
+    return <AppLoading />;
+  } else {
+    return (
+      <>
+        <Calendar markingType={"period"} markedDates={userDates} />
+        <View style={styles.container}>
+          {userGoalKeys.map((goalKey) => {
+            return (
+              <View
+                key={goalKey}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 44 / 2,
+                  backgroundColor: goalColors[goalKey],
+                }}
+              >
+                <Text>{userGoals[goalKey]}</Text>
+              </View>
+            );
+          })}
+        </View>
+      </>
+    );
+  }
 }

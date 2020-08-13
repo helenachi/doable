@@ -15,9 +15,17 @@ import {
 const Tab = createBottomTabNavigator();
 
 export default function DashboardScreen(props) {
-  const TodayComponent = TodayScreen;
+  // console.log(props.current);
+  const TodayComponent = () => {
+    return <TodayScreen {...props} user={props.user} current={props.current} />;
+  };
   const GoalComponent = () => {
-    return <GoalsScreen {...props} />;
+    return <GoalsScreen {...props} user={props.user} current={props.current} />;
+  };
+  const CalendarComponent = () => {
+    return (
+      <CalendarScreen {...props} user={props.user} current={props.current} />
+    );
   };
 
   return (
@@ -29,7 +37,7 @@ export default function DashboardScreen(props) {
       >
         <Tab.Screen
           name="Today"
-          component={TodayScreen}
+          component={TodayComponent}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons
@@ -51,7 +59,7 @@ export default function DashboardScreen(props) {
         />
         <Tab.Screen
           name="Calendar"
-          component={CalendarScreen}
+          component={CalendarComponent}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="ios-calendar" size={20} color="gray" />

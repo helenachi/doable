@@ -4,14 +4,72 @@ import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
+import { AppLoading } from "expo";
 
 export default function GoalsScreen(props) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.smallText}>This month's goals</Text>
-      <Text style={styles.top}>Goal #1</Text>
-      <Text style={styles.middle}>Goal #2</Text>
-      <Text style={styles.bottom}>Goal #3</Text>
-    </View>
-  );
+  const [loading, setLoading] = useState(true);
+  const [userGoals, setUserGoals] = useState(null);
+  const [goalColors, setGoalColors] = useState(null);
+  const userGoalKeys = ["goal1", "goal2", "goal3"];
+
+  useEffect(() => {
+    if (loading) {
+      const monthlyGoalsRef = firebase
+        .firestore()
+        .collection("monthly_goals")
+        .doc(props.current);
+      monthlyGoalsRef
+        .get()
+        .then(function (doc) {
+          if (doc.exists) {
+            setUserGoals(doc.data()[props.user.id]);
+            const goalColorsRef = firebase
+              .firestore()
+              .collection("appData")
+              .doc("goalColors");
+            goalColorsRef.get().then(function (doc) {
+              if (doc.exists) {
+                setGoalColors(doc.data());
+              } else {
+                console.log("No such document!");
+              }
+            });
+          } else {
+            console.log("No such document!");
+          }
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+      if (userGoals && goalColors) {
+        setLoading(false);
+      }
+    }
+  }, [userGoals, goalColors]);
+
+  if (loading) {
+    return <AppLoading />;
+  } else {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.smallText}>This month's goals</Text>
+        {userGoalKeys.map((goalKey) => {
+          return (
+            <Text
+              key={goalKey}
+              style={{
+                flex: 0.3,
+                borderWidth: 5,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                backgroundColor: goalColors[goalKey],
+              }}
+            >
+              {userGoals[goalKey]}
+            </Text>
+          );
+        })}
+      </View>
+    );
+  }
 }
