@@ -4,10 +4,12 @@ import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
+import { AppLoading } from "expo";
 
 export default function GoalsScreen(props) {
   const [loading, setLoading] = useState(true);
   const [userGoals, setUserGoals] = useState(null);
+  const [goalColors, setGoalColors] = useState(null);
   const userGoalKeys = ["goal1", "goal2", "goal3"];
 
   useEffect(() => {
@@ -21,6 +23,16 @@ export default function GoalsScreen(props) {
         .then(function (doc) {
           if (doc.exists) {
             setUserGoals(doc.data()[props.user.id]);
+            const goalColorsRef = firebase
+              .firestore()
+              .collection("appData")
+              .doc("goalColors");
+            goalColorsRef.get().then(function (doc) {
+              if (doc.exists) {
+                setGoalColors(doc.data());
+                console.log("goalColors:", goalColors);
+              }
+            });
           } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -29,35 +41,35 @@ export default function GoalsScreen(props) {
         .catch(function (error) {
           console.log("Error getting document:", error);
         });
-      if (userGoals) {
+      if (userGoals && goalColors) {
         setLoading(false);
       }
     }
-  }, [userGoals]);
+  }, [userGoals, goalColors]);
 
-  console.log("goal screen!");
-  return (
-    <View style={styles.container}>
-      <Text style={styles.smallText}>This month's goals</Text>
-      {userGoalKeys.map((key) => {
-        return (
-          <Text
-            id={key}
-            style={{
-              flex: 0.3,
-              borderWidth: 5,
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20,
-              backgroundColor: "#AFB8DE",
-            }}
-          >
-            {userGoals[key]}
-          </Text>
-        );
-      })}
-      {/* <Text style={styles.top}>Goal #1</Text>
-      <Text style={styles.middle}>Goal #2</Text>
-      <Text style={styles.bottom}>Goal #3</Text> */}
-    </View>
-  );
+  if (loading) {
+    return <AppLoading />;
+  } else {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.smallText}>This month's goals</Text>
+        {userGoalKeys.map((goalKey) => {
+          return (
+            <Text
+              key={goalKey}
+              style={{
+                flex: 0.3,
+                borderWidth: 5,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                backgroundColor: goalColors[goalKey],
+              }}
+            >
+              {userGoals[goalKey]}
+            </Text>
+          );
+        })}
+      </View>
+    );
+  }
 }
