@@ -42,7 +42,6 @@ export default function TodayScreen(props) {
           console.log("Error getting document:", error);
         });
       if (userGoals && goalTasks) {
-        // console.log("userGoals:", userGoals);
         setLoading(false);
       }
     }
