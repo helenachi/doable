@@ -48,11 +48,28 @@ export default function TodayScreen(props) {
     }
   }, [userGoals, goalTasks]);
 
+  const markTaskComplete = () => {
+    const doableToUpdate =
+      "completedTasks" +
+      "." +
+      userGoals[randomGoal] +
+      "." +
+      goalTasks.randomTask;
+    console.log("doableToUpdate:", doableToUpdate);
+    const firebaseUser = firebase
+      .firestore()
+      .collection("users")
+      .doc(props.user.id);
+    firebaseUser.update({
+      [`${doableToUpdate}`]: true,
+    });
+  };
+
   if (loading) {
     return <AppLoading />;
   } else {
-    console.log("userGoals data:", userGoals);
-    console.log("goalTasks: ", goalTasks);
+    // console.log("userGoals data:", userGoals);
+    // console.log("goalTasks: ", goalTasks);
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
@@ -60,7 +77,7 @@ export default function TodayScreen(props) {
         <Text style={styles.taskText}>
           {goalTasks.tasks[goalTasks.randomTask]}
         </Text>
-        <Button title="Start Time"></Button>
+        <Button onPress={markTaskComplete} title="Mark Complete"></Button>
       </View>
     );
   }
