@@ -5,12 +5,12 @@ import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
 import { AppLoading } from "expo";
+import CircleTimer from "react-native-circle-timer";
 
 export default function TodayScreen(props) {
   const [loading, setLoading] = useState(true);
   const [userGoals, setUserGoals] = useState(null);
   const [goalTasks, setGoalTasks] = useState(null);
-  let randomGoal = "goal" + props.user.randomGoal.toString();
 
   useEffect(() => {
     if (loading) {
@@ -49,6 +49,7 @@ export default function TodayScreen(props) {
   }, [userGoals, goalTasks]);
 
   const markTaskComplete = () => {
+    let randomGoal = "goal" + props.user.randomGoal.toString();
     const doableToUpdate =
       "completedTasks" +
       "." +
