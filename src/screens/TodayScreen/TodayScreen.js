@@ -11,6 +11,7 @@ export default function TodayScreen(props) {
   const [loading, setLoading] = useState(true);
   const [userGoals, setUserGoals] = useState(null);
   const [goalTasks, setGoalTasks] = useState(null);
+  let randomGoal = "goal" + props.user.randomGoal.toString();
   /**
    * 0: not started
    * 1: in progress
@@ -18,7 +19,7 @@ export default function TodayScreen(props) {
    * 3: complete
    */
   const [completionStatus, setCompletionStatus] = useState(0);
-  let randomGoal = "goal" + props.user.randomGoal.toString();
+  const [completionComponent, setCompletionComponent] = useState(null);
 
   useEffect(() => {
     if (loading) {
@@ -53,6 +54,27 @@ export default function TodayScreen(props) {
     }
   }, [userGoals, goalTasks]);
 
+  useEffect(() => {
+    console.log("user.completed: ", props.user.completed);
+    console.log("completionStatus: ", completionStatus);
+    if (props.user.completed) {
+      setCompletionStatus(3);
+      setCompletionComponent(completed);
+    } else {
+      if (completionStatus === 0) {
+        setCompletionComponent(playButton);
+      } else if (completionStatus === 1) {
+        setCompletionComponent(circularProgress);
+      } else if (completionStatus === 2) {
+        setCompletionComponent(onPause);
+      } else if (completionStatus === 3) {
+        setCompletionComponent(completed);
+      } else {
+        setCompletionComponent(<View></View>);
+      }
+    }
+  }, [completionStatus]);
+
   const markTaskComplete = () => {
     const doableToUpdate =
       "completedTasks" +
@@ -68,17 +90,52 @@ export default function TodayScreen(props) {
     firebaseUser.update({
       [`${doableToUpdate}`]: true,
     });
+    // mark user.completed as true
   };
 
+  const completeButton = (
+    <Button onPress={markTaskComplete} title="Mark Complete"></Button>
+  );
+
+  const circularProgress = (
+    <View style={{ alignSelf: "center" }}>
+      <TouchableOpacity onClick={() => setCompletionStatus(2)}>
+        <AnimatedCircularProgress
+          size={120}
+          width={15}
+          fill={100}
+          rotation={0}
+          tintColor="#00e0ff"
+          onAnimationComplete={() => console.log("onAnimationComplete")}
+          backgroundColor="#3d5875"
+          duration={10000} // how fast it fills up in ms
+        />
+      </TouchableOpacity>
+    </View>
+  );
+
+  const onPause = (
+    <View>
+      <TouchableOpacity onClick={() => setCompletionStatus(1)}>
+        <Button title="Resume Doable"></Button>
+      </TouchableOpacity>
+      <TouchableOpacity onClick={() => setCompletionStatus(3)}>
+        <Button onPress={markTaskComplete} title="Mark Complete"></Button>
+      </TouchableOpacity>
+    </View>
+  );
+
   const playButton = (
-    <TouchableOpacity>
+    <TouchableOpacity onClick={() => setCompletionStatus(1)}>
       <Ionicons name="ios-play-circle" size={20} color="gray" />
     </TouchableOpacity>
   );
 
-  // const completionComponent = () => {
-  //   return <AppLoading />;
-  // };
+  const completed = (
+    <Text>
+      Congratulations on doing your doable! See you tomorrow for a new one :)
+    </Text>
+  );
 
   if (loading) {
     return <AppLoading />;
@@ -92,20 +149,10 @@ export default function TodayScreen(props) {
         <Text style={styles.taskText}>
           {goalTasks.tasks[goalTasks.randomTask]}
         </Text>
-        {playButton}
-        {/* <Button onPress={markTaskComplete} title="Mark Complete"></Button>
-        <View style={{ alignSelf: "center" }}>
-          <AnimatedCircularProgress
-            size={120}
-            width={15}
-            fill={100}
-            rotation={0}
-            tintColor="#00e0ff"
-            onAnimationComplete={() => console.log("onAnimationComplete")}
-            backgroundColor="#3d5875"
-            duration={10000} // how fast it fills up in ms
-          />
-        </View> */}
+        {/* {playButton}
+        {completeButton}
+        {circularProgress} */}
+        {completionComponent}
       </View>
     );
   }
