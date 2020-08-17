@@ -13,6 +13,7 @@ import styles from "./styles";
 import { firebase } from "../../firebase/config";
 import { AppLoading } from "expo";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import moment from "moment";
 
 export default function TodayScreen(props) {
   const [loading, setLoading] = useState(true);
@@ -141,8 +142,8 @@ export default function TodayScreen(props) {
   );
 
   const fillToTime = (fill) => {
-    let numSeconds = (fill / 100) * (doableMaxDuration / 1000);
-    return Math.round(numSeconds);
+    let numSeconds = Math.round((fill / 100) * doableMaxDuration);
+    return new Date(numSeconds).toISOString().substr(11, 8);
   };
 
   const onPause = (
