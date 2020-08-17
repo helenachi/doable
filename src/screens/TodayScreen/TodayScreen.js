@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View, Button } from "react-native";
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Button,
+  Easing,
+} from "react-native";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
@@ -12,6 +19,7 @@ export default function TodayScreen(props) {
   const [userGoals, setUserGoals] = useState(null);
   const [goalTasks, setGoalTasks] = useState(null);
   let randomGoal = "goal" + props.user.randomGoal.toString();
+
   /**
    * 0: not started
    * 1: in progress
@@ -20,6 +28,9 @@ export default function TodayScreen(props) {
    */
   const [completionStatus, setCompletionStatus] = useState(0);
   const [completionComponent, setCompletionComponent] = useState(null);
+
+  const [doableFill, setDoableFill] = useState(0);
+  const doableMaxDuration = 20000;
 
   useEffect(() => {
     if (loading) {
@@ -55,8 +66,8 @@ export default function TodayScreen(props) {
   }, [userGoals, goalTasks]);
 
   useEffect(() => {
-    console.log("user.completed: ", props.user.completed);
-    console.log("completionStatus: ", completionStatus);
+    // console.log("user.completed: ", props.user.completed);
+    // console.log("completionStatus: ", completionStatus);
     if (props.user.completed) {
       setCompletionStatus(3);
       setCompletionComponent(completed);
@@ -96,14 +107,22 @@ export default function TodayScreen(props) {
   };
 
   const playButton = (
-    <TouchableOpacity onPress={() => setCompletionStatus(1)}>
+    <TouchableOpacity
+      onPress={() => {
+        setCompletionStatus(1);
+      }}
+    >
       <Ionicons name="ios-play-circle" size={20} color="gray" />
     </TouchableOpacity>
   );
 
   const circularProgress = (
     <View style={{ alignSelf: "center" }}>
-      <TouchableOpacity onPress={() => setCompletionStatus(2)}>
+      <TouchableOpacity
+        onPress={() => {
+          setCompletionStatus(2);
+        }}
+      >
         <AnimatedCircularProgress
           size={120}
           width={15}
@@ -112,11 +131,19 @@ export default function TodayScreen(props) {
           tintColor="#00e0ff"
           onAnimationComplete={() => console.log("onAnimationComplete")}
           backgroundColor="#3d5875"
-          duration={10000} // how fast it fills up in ms
-        />
+          easing={Easing.linear}
+          duration={doableMaxDuration} // how fast it fills up in milliseconds
+        >
+          {(fill) => <Text style={styles.points}>{fillToTime(fill)}</Text>}
+        </AnimatedCircularProgress>
       </TouchableOpacity>
     </View>
   );
+
+  const fillToTime = (fill) => {
+    let numSeconds = (fill / 100) * (doableMaxDuration / 1000);
+    return Math.round(numSeconds);
+  };
 
   const onPause = (
     <View>
@@ -150,9 +177,6 @@ export default function TodayScreen(props) {
         <Text style={styles.taskText}>
           {goalTasks.tasks[goalTasks.randomTask]}
         </Text>
-        {/* {playButton}
-        {completeButton}
-        {circularProgress} */}
         {completionComponent}
       </View>
     );
