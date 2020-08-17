@@ -76,6 +76,7 @@ export default function TodayScreen(props) {
   }, [completionStatus]);
 
   const markTaskComplete = () => {
+    setCompletionStatus(3);
     const doableToUpdate =
       "completedTasks" +
       "." +
@@ -89,17 +90,20 @@ export default function TodayScreen(props) {
       .doc(props.user.id);
     firebaseUser.update({
       [`${doableToUpdate}`]: true,
+      completed: true,
     });
-    // mark user.completed as true
+    props.user.completed = true;
   };
 
-  const completeButton = (
-    <Button onPress={markTaskComplete} title="Mark Complete"></Button>
+  const playButton = (
+    <TouchableOpacity onPress={() => setCompletionStatus(1)}>
+      <Ionicons name="ios-play-circle" size={20} color="gray" />
+    </TouchableOpacity>
   );
 
   const circularProgress = (
     <View style={{ alignSelf: "center" }}>
-      <TouchableOpacity onClick={() => setCompletionStatus(2)}>
+      <TouchableOpacity onPress={() => setCompletionStatus(2)}>
         <AnimatedCircularProgress
           size={120}
           width={15}
@@ -116,19 +120,16 @@ export default function TodayScreen(props) {
 
   const onPause = (
     <View>
-      <TouchableOpacity onClick={() => setCompletionStatus(1)}>
-        <Button title="Resume Doable"></Button>
-      </TouchableOpacity>
-      <TouchableOpacity onClick={() => setCompletionStatus(3)}>
-        <Button onPress={markTaskComplete} title="Mark Complete"></Button>
-      </TouchableOpacity>
+      <Button
+        onPress={() => setCompletionStatus(1)}
+        title="Resume Doable"
+      ></Button>
+      <Button onPress={markTaskComplete} title="Mark Complete"></Button>
     </View>
   );
 
-  const playButton = (
-    <TouchableOpacity onClick={() => setCompletionStatus(1)}>
-      <Ionicons name="ios-play-circle" size={20} color="gray" />
-    </TouchableOpacity>
+  const completeButton = (
+    <Button onPress={markTaskComplete} title="Mark Complete"></Button>
   );
 
   const completed = (
