@@ -29,9 +29,10 @@ export default function TodayScreen(props) {
    */
   const [completionStatus, setCompletionStatus] = useState(0);
   const [completionComponent, setCompletionComponent] = useState(null);
-
-  const [doableFill, setDoableFill] = useState(0);
   const doableMaxDuration = 20000;
+
+  // const [stopwatchActive, setStopwatchActive] = useState(false);
+  // const [filled, setFilled] = useState(0);
 
   useEffect(() => {
     if (loading) {
@@ -87,6 +88,16 @@ export default function TodayScreen(props) {
     }
   }, [completionStatus]);
 
+  // useEffect(() => {
+  //   console.log("filled's useEffect hook");
+  //   if (stopwatchActive) {
+  //     window.setTimeout(() => {
+  //       console.log(filled);
+  //       setFilled((filled) => filled + 1);
+  //     }, 1000);
+  //   }
+  // }, [stopwatchActive, filled]);
+
   const markTaskComplete = () => {
     setCompletionStatus(3);
     const doableToUpdate =
@@ -108,22 +119,14 @@ export default function TodayScreen(props) {
   };
 
   const playButton = (
-    <TouchableOpacity
-      onPress={() => {
-        setCompletionStatus(1);
-      }}
-    >
+    <TouchableOpacity onPress={() => setCompletionStatus(1)}>
       <Ionicons name="ios-play-circle" size={20} color="gray" />
     </TouchableOpacity>
   );
 
   const circularProgress = (
     <View style={{ alignSelf: "center" }}>
-      <TouchableOpacity
-        onPress={() => {
-          setCompletionStatus(2);
-        }}
-      >
+      <TouchableOpacity onPress={() => setCompletionStatus(2)}>
         <AnimatedCircularProgress
           size={120}
           width={15}
@@ -135,7 +138,10 @@ export default function TodayScreen(props) {
           easing={Easing.linear}
           duration={doableMaxDuration} // how fast it fills up in milliseconds
         >
-          {(fill) => <Text style={styles.points}>{fillToTime(fill)}</Text>}
+          {/* {(fill) => {
+            return <Text style={styles.points}>{fillToTime(fill)}</Text>;
+          }} */}
+          {(fill) => <Text style={styles.points}>{filled}</Text>}
         </AnimatedCircularProgress>
       </TouchableOpacity>
     </View>
