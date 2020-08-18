@@ -31,8 +31,8 @@ export default function TodayScreen(props) {
   const [completionComponent, setCompletionComponent] = useState(null);
   const doableMaxDuration = 20000;
 
-  // const [stopwatchActive, setStopwatchActive] = useState(false);
-  // const [filled, setFilled] = useState(0);
+  const [stopwatchActive, setStopwatchActive] = useState(false);
+  const [filled, setFilled] = useState(0);
 
   useEffect(() => {
     if (loading) {
@@ -88,15 +88,16 @@ export default function TodayScreen(props) {
     }
   }, [completionStatus]);
 
-  // useEffect(() => {
-  //   console.log("filled's useEffect hook");
-  //   if (stopwatchActive) {
-  //     window.setTimeout(() => {
-  //       console.log(filled);
-  //       setFilled((filled) => filled + 1);
-  //     }, 1000);
-  //   }
-  // }, [stopwatchActive, filled]);
+  useEffect(() => {
+    console.log("filled's useEffect hook");
+    console.log("filled:", filled);
+    if (stopwatchActive) {
+      window.setTimeout(() => {
+        console.log(filled);
+        setFilled((filled) => filled + 1);
+      }, 1000);
+    }
+  }, [stopwatchActive, filled]);
 
   const markTaskComplete = () => {
     setCompletionStatus(3);
@@ -119,14 +120,24 @@ export default function TodayScreen(props) {
   };
 
   const playButton = (
-    <TouchableOpacity onPress={() => setCompletionStatus(1)}>
+    <TouchableOpacity
+      onPress={() => {
+        setCompletionStatus(1);
+        setStopwatchActive(true);
+      }}
+    >
       <Ionicons name="ios-play-circle" size={20} color="gray" />
     </TouchableOpacity>
   );
 
   const circularProgress = (
     <View style={{ alignSelf: "center" }}>
-      <TouchableOpacity onPress={() => setCompletionStatus(2)}>
+      <TouchableOpacity
+        onPress={() => {
+          setCompletionStatus(2);
+          setStopwatchActive(false);
+        }}
+      >
         <AnimatedCircularProgress
           size={120}
           width={15}
@@ -155,7 +166,10 @@ export default function TodayScreen(props) {
   const onPause = (
     <View>
       <Button
-        onPress={() => setCompletionStatus(1)}
+        onPress={() => {
+          setCompletionStatus(1);
+          setStopwatchActive(true);
+        }}
         title="Resume Doable"
       ></Button>
       <Button onPress={markTaskComplete} title="Mark Complete"></Button>
