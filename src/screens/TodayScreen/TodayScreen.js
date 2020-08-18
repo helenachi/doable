@@ -141,7 +141,7 @@ export default function TodayScreen(props) {
           {/* {(fill) => {
             return <Text style={styles.points}>{fillToTime(fill)}</Text>;
           }} */}
-          {(fill) => <Text style={styles.points}>{filled}</Text>}
+          {(fill) => <Text style={styles.points}>{fillToTime(fill)}</Text>}
         </AnimatedCircularProgress>
       </TouchableOpacity>
     </View>
