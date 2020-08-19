@@ -34,6 +34,7 @@ export default function DashboardScreen(props) {
         tabBarOptions={{
           activeTintColor: "#4a59a8",
         }}
+        initialRouteName="Today"
       >
         <Tab.Screen
           name="Goals"
