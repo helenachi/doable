@@ -12,10 +12,19 @@ import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
 import { AppLoading } from "expo";
+import {
+  useFonts,
+  Montserrat_400Regular,
+  Montserrat_600SemiBold,
+} from "@expo-google-fonts/montserrat";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import moment from "moment";
 
 export default function TodayScreen(props) {
+  let [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Montserrat_600SemiBold,
+  });
   const [loading, setLoading] = useState(true);
   const [userGoals, setUserGoals] = useState(null);
   const [goalTasks, setGoalTasks] = useState(null);
@@ -174,7 +183,7 @@ export default function TodayScreen(props) {
     </View>
   );
 
-  if (loading) {
+  if (loading || !fontsLoaded) {
     return <AppLoading />;
   } else {
     return (
