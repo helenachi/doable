@@ -16,7 +16,7 @@ import {
   RegistrationScreen,
   DashboardScreen,
 } from "./src/screens";
-import { Button, View, Text, TouchableOpacity } from "react-native";
+import { Button, View, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { firebase } from "./src/firebase/config";
 import { decode, encode } from "base-64";
@@ -90,9 +90,12 @@ export default function App() {
         <Stack.Screen
           name="Dashboard"
           options={{
+            headerLeft: () => (
+              <Image source={require("./assets/happy_hour_logo.png")} style={{height: 20, width: 20, margin: 10}} />
+            ),
             headerRight: () => (
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Ionicons name="ios-settings" size={20} color="gray" />
+                <Ionicons name="ios-settings" size={20} color="gray" style={{height: 20, width: 20, margin: 10}} />
               </TouchableOpacity>
             ),
           }}
