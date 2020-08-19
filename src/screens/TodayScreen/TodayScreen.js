@@ -68,8 +68,6 @@ export default function TodayScreen(props) {
   }, [userGoals, goalTasks]);
 
   useEffect(() => {
-    // console.log("user.completed: ", props.user.completed);
-    // console.log("completionStatus: ", completionStatus);
     if (props.user.completed) {
       setCompletionStatus(3);
       setCompletionComponent(completed);
@@ -139,7 +137,7 @@ export default function TodayScreen(props) {
           onAnimationComplete={() => console.log("onAnimationComplete")}
           backgroundColor="#3d5875"
           easing={Easing.linear}
-          duration={doableMaxDuration} // how fast it fills up in milliseconds
+          duration={doableMaxDuration}
         >
           {(fill) => {
             setFilled(Math.round(fill));
@@ -170,16 +168,15 @@ export default function TodayScreen(props) {
   );
 
   const completed = (
-    <Text>
-      Congratulations on doing your doable! See you tomorrow for a new one :)
-    </Text>
+    <View>
+      <Text>Cheers!</Text>
+      <Text>You're one step closer to your goals.</Text>
+    </View>
   );
 
   if (loading) {
     return <AppLoading />;
   } else {
-    // console.log("userGoals data:", userGoals);
-    // console.log("goalTasks: ", goalTasks);
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
