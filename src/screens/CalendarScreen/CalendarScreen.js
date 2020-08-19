@@ -6,8 +6,10 @@ import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
 import { AppLoading } from "expo";
+import { useFonts, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat";
 
 export default function CalendarScreen(props) {
+  let [fontsLoaded] = useFonts({ Montserrat_400Regular, Montserrat_600SemiBold });
   const [loading, setLoading] = useState(true);
   const [userGoals, setUserGoals] = useState(null);
   const [goalColors, setGoalColors] = useState(null);
@@ -65,6 +67,7 @@ export default function CalendarScreen(props) {
   } else {
     return (
       <>
+        <Text style={styles.title}>Happy Calendar</Text>
         <Calendar markingType={"period"} markedDates={userDates} />
         <View style={styles.container}>
           {userGoalKeys.map((goalKey) => {
@@ -78,7 +81,7 @@ export default function CalendarScreen(props) {
                   backgroundColor: goalColors[goalKey],
                 }}
               >
-                <Text>{userGoals[goalKey]}</Text>
+                <Text style={styles.legendText}>{userGoals[goalKey]}</Text>
               </View>
             );
           })}

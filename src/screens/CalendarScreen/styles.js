@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 
-const goal1 = "#f3c5dc";
-const goal2 = "#f7d1b6";
-const goal3 = "#f4e8b2";
+const goal1 = "#EA6648";
+const goal2 = "#FDC16B";
+const goal3 = "#4A59A8";
 
 export default StyleSheet.create({
   circle1: {
@@ -30,4 +30,12 @@ export default StyleSheet.create({
     padding: 30,
     margin: 20,
   },
+  title: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 35,
+  },
+  legendText: {
+    fontFamily: "Montserrat_400Regular",
+    fontSize: 12,
+  }
 });

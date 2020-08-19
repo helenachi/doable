@@ -36,6 +36,15 @@ export default function DashboardScreen(props) {
         }}
       >
         <Tab.Screen
+          name="Goals"
+          component={GoalComponent}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="ios-star-outline" size={20} color="gray" />
+            ),
+          }}
+        />
+        <Tab.Screen
           name="Today"
           component={TodayComponent}
           options={{
@@ -45,15 +54,6 @@ export default function DashboardScreen(props) {
                 size={20}
                 color="gray"
               />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Goals"
-          component={GoalComponent}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-star-outline" size={20} color="gray" />
             ),
           }}
         />
