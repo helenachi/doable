@@ -32,7 +32,7 @@ export default function TodayScreen(props) {
   const doableMaxDuration = 20000;
 
   const [stopwatchActive, setStopwatchActive] = useState(false);
-  const [filled, setFilled] = useState(0);
+  const [filled, setFilled] = useState(props.user.fill);
 
   useEffect(() => {
     if (loading) {
@@ -88,17 +88,6 @@ export default function TodayScreen(props) {
     }
   }, [completionStatus]);
 
-  useEffect(() => {
-    console.log("filled's useEffect hook");
-    console.log("filled:", filled);
-    if (stopwatchActive) {
-      window.setTimeout(() => {
-        console.log(filled);
-        setFilled((filled) => filled + 1);
-      }, 1000);
-    }
-  }, [stopwatchActive, filled]);
-
   const markTaskComplete = () => {
     setCompletionStatus(3);
     const doableToUpdate =
@@ -115,17 +104,13 @@ export default function TodayScreen(props) {
     firebaseUser.update({
       [`${doableToUpdate}`]: true,
       completed: true,
+      fill: filled,
     });
     props.user.completed = true;
   };
 
   const playButton = (
-    <TouchableOpacity
-      onPress={() => {
-        setCompletionStatus(1);
-        setStopwatchActive(true);
-      }}
-    >
+    <TouchableOpacity onPress={() => setCompletionStatus(1)}>
       <Ionicons name="ios-play-circle" size={20} color="gray" />
     </TouchableOpacity>
   );
@@ -135,13 +120,20 @@ export default function TodayScreen(props) {
       <TouchableOpacity
         onPress={() => {
           setCompletionStatus(2);
-          setStopwatchActive(false);
+          const firebaseUser = firebase
+            .firestore()
+            .collection("users")
+            .doc(props.user.id);
+          firebaseUser.update({
+            fill: filled,
+          });
         }}
       >
         <AnimatedCircularProgress
           size={120}
           width={15}
           fill={100}
+          prefill={filled}
           rotation={0}
           tintColor="#00e0ff"
           onAnimationComplete={() => console.log("onAnimationComplete")}
@@ -149,10 +141,10 @@ export default function TodayScreen(props) {
           easing={Easing.linear}
           duration={doableMaxDuration} // how fast it fills up in milliseconds
         >
-          {/* {(fill) => {
+          {(fill) => {
+            setFilled(Math.round(fill));
             return <Text style={styles.points}>{fillToTime(fill)}</Text>;
-          }} */}
-          {(fill) => <Text style={styles.points}>{fillToTime(fill)}</Text>}
+          }}
         </AnimatedCircularProgress>
       </TouchableOpacity>
     </View>
@@ -166,10 +158,7 @@ export default function TodayScreen(props) {
   const onPause = (
     <View>
       <Button
-        onPress={() => {
-          setCompletionStatus(1);
-          setStopwatchActive(true);
-        }}
+        onPress={() => setCompletionStatus(1)}
         title="Resume Doable"
       ></Button>
       <Button onPress={markTaskComplete} title="Mark Complete"></Button>
