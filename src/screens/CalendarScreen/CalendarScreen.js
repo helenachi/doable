@@ -74,7 +74,7 @@ export default function CalendarScreen(props) {
   } else {
     return (
       <>
-        <Text style={styles.title}>Happy Calendar</Text>
+        <Text style={styles.title}>Happy{"\n"}Calendar</Text>
         <Calendar markingType={"period"} markedDates={userDates} />
         <View style={styles.container}>
           {userGoalKeys.map((goalKey) => {
@@ -82,7 +82,7 @@ export default function CalendarScreen(props) {
               <View>
                 <Text
                   style={{
-                    fontFamily: "Montserrat_400Regular",
+                    fontFamily: "Montserrat_600SemiBold",
                     fontSize: 12,
                     color: goalColors[goalKey],
                   }}
