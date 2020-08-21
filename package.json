@@ -19,6 +19,7 @@
     "expo-font": "~8.2.1",
     "expo-status-bar": "^1.0.2",
     "firebase": "^7.16.0",
+    "flexbox-react": "^4.4.0",
     "moment": "^2.27.0",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
