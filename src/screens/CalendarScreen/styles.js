@@ -27,15 +27,13 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     backgroundColor: "#fff",
-    padding: 30,
-    margin: 20,
+    padding: 50,
+
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     fontFamily: "Montserrat_600SemiBold",
     fontSize: 35,
   },
-  legendText: {
-    fontFamily: "Montserrat_400Regular",
-    fontSize: 12,
-  }
 });

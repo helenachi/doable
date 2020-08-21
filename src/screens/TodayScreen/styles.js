@@ -39,7 +39,6 @@ export default StyleSheet.create({
     height: 100,
   },
   completionBox: {
-    width: 70,
     height: 85,
     alignSelf: "center",
     alignContent: "center",

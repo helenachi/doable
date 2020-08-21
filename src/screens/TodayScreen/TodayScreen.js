@@ -143,9 +143,9 @@ export default function TodayScreen(props) {
           fill={100}
           prefill={filled}
           rotation={0}
-          tintColor="#00e0ff"
+          tintColor="#EA6648"
           onAnimationComplete={() => console.log("onAnimationComplete")}
-          backgroundColor="#3d5875"
+          backgroundColor="#F7A08D"
           easing={Easing.linear}
           duration={doableMaxDuration}
         >
