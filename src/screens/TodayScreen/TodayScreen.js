@@ -6,6 +6,7 @@ import {
   View,
   Button,
   Easing,
+  Image,
 } from "react-native";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { Ionicons } from "@expo/vector-icons";
@@ -118,7 +119,7 @@ export default function TodayScreen(props) {
 
   const playButton = (
     <TouchableOpacity onPress={() => setCompletionStatus(1)}>
-      <Ionicons name="ios-play-circle" size={20} color="gray" />
+      <Ionicons name="ios-play-circle" size={85} color="#EA6648" />
     </TouchableOpacity>
   );
 
@@ -188,18 +189,23 @@ export default function TodayScreen(props) {
   } else {
     return (
       <View style={styles.container}>
-        <View style={styles.goalBox}></View>
-        <View style={styles.taskBox}></View>
-        <View style={styles.completionBox}></View>
+        <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
+        <View style={styles.card}>
+          <View style={styles.goalBox}>
+            <Image
+              style={styles.goalImage}
+              source={require("../../../assets/relationship_photo.jpeg")}
+            />
+            <Text style={styles.goalText}>{userGoals[randomGoal]}</Text>
+          </View>
+          <View style={styles.taskBox}>
+            <Text style={styles.taskText}>
+              {goalTasks.tasks[goalTasks.randomTask]}
+            </Text>
+          </View>
+          <View style={styles.completionBox}>{completionComponent}</View>
+        </View>
       </View>
-      // <View style={styles.container}>
-      //   <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
-      //   <Text style={styles.goalText}>{userGoals[randomGoal]}</Text>
-      //   <Text style={styles.taskText}>
-      //     {goalTasks.tasks[goalTasks.randomTask]}
-      //   </Text>
-      //   {completionComponent}
-      // </View>
     );
   }
 }
