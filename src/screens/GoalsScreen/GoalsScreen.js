@@ -6,6 +6,7 @@ import styles from "./styles";
 import { firebase } from "../../firebase/config";
 import { AppLoading } from "expo";
 import { useFonts, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat";
+import * as Progress from 'react-native-progress';
 
 export default function GoalsScreen(props) {
   let [fontsLoaded] = useFonts({ Montserrat_400Regular, Montserrat_600SemiBold });
@@ -54,27 +55,37 @@ export default function GoalsScreen(props) {
   } else {
     return (
       <View style={styles.container}>
-        <Text style={styles.smallText}>My Goals</Text>
+        <Text style={styles.smallText}>My</Text>
+        <Text style={styles.smallText}>Goals</Text>
         {userGoalKeys.map((goalKey) => {
           return (
+            <View style={{width: 270, height: 200, flex: 0.3,
+              borderWidth: 0.5,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              backgroundColor: "#fff",
+              fontFamily: "Montserrat_600SemiBold",
+              fontSize: 18,
+              borderRadius: 25,
+              paddingLeft: 20,
+              paddingTop: 15,}}>
             <Text
               key={goalKey}
               style={{
-                flex: 0.3,
-                borderWidth: 0.5,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-                //backgroundColor: goalColors[goalKey],
-                backgroundColor: "#fff",
                 fontFamily: "Montserrat_600SemiBold",
-                borderRadius: 25,
+                fontSize: 22,
+                paddingTop: 10,
+                paddingBottom: 28,
               }}
             >
               {userGoals[goalKey]}
             </Text>
+            <Progress.Bar progress={1.0} width={50} animated={false} color={goalColors[goalKey]}/>
+            </View>
           
           );
         })}
+        
       </View>
     );
   }

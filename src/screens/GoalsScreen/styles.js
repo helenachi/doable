@@ -6,11 +6,10 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "#fff",
     //background: url("../../../assets/goals_block.png"),
-    padding: 20,
-    margin: 10,
+    padding: 50,
   },
   smallText: {
-    fontSize: 35,
+    fontSize: 40,
     color: "#333333",
     fontFamily: "Montserrat_600SemiBold",
   },
