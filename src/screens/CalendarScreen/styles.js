@@ -27,8 +27,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     backgroundColor: "#fff",
-    padding: 30,
-    margin: 20,
+    padding: 50,
   },
   title: {
     fontFamily: "Montserrat_600SemiBold",
