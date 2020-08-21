@@ -6,16 +6,26 @@ import {
   View,
   Button,
   Easing,
+  Image,
 } from "react-native";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
 import { AppLoading } from "expo";
+import {
+  useFonts,
+  Montserrat_400Regular,
+  Montserrat_600SemiBold,
+} from "@expo-google-fonts/montserrat";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import moment from "moment";
 
 export default function TodayScreen(props) {
+  let [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Montserrat_600SemiBold,
+  });
   const [loading, setLoading] = useState(true);
   const [userGoals, setUserGoals] = useState(null);
   const [goalTasks, setGoalTasks] = useState(null);
@@ -109,7 +119,7 @@ export default function TodayScreen(props) {
 
   const playButton = (
     <TouchableOpacity onPress={() => setCompletionStatus(1)}>
-      <Ionicons name="ios-play-circle" size={20} color="gray" />
+      <Ionicons name="ios-play-circle" size={85} color="#EA6648" />
     </TouchableOpacity>
   );
 
@@ -133,9 +143,9 @@ export default function TodayScreen(props) {
           fill={100}
           prefill={filled}
           rotation={0}
-          tintColor="#00e0ff"
+          tintColor="#EA6648"
           onAnimationComplete={() => console.log("onAnimationComplete")}
-          backgroundColor="#3d5875"
+          backgroundColor="#F7A08D"
           easing={Easing.linear}
           duration={doableMaxDuration}
         >
@@ -174,17 +184,27 @@ export default function TodayScreen(props) {
     </View>
   );
 
-  if (loading) {
+  if (loading || !fontsLoaded) {
     return <AppLoading />;
   } else {
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
-        <Text style={styles.goalText}>{userGoals[randomGoal]}</Text>
-        <Text style={styles.taskText}>
-          {goalTasks.tasks[goalTasks.randomTask]}
-        </Text>
-        {completionComponent}
+        <View style={styles.card}>
+          <View style={styles.goalBox}>
+            <Image
+              style={styles.goalImage}
+              source={require("../../../assets/relationship_photo.jpeg")}
+            />
+            <Text style={styles.goalText}>{userGoals[randomGoal]}</Text>
+          </View>
+          <View style={styles.taskBox}>
+            <Text style={styles.taskText}>
+              {goalTasks.tasks[goalTasks.randomTask]}
+            </Text>
+          </View>
+          <View style={styles.completionBox}>{completionComponent}</View>
+        </View>
       </View>
     );
   }

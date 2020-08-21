@@ -28,13 +28,11 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "#fff",
     padding: 50,
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     fontFamily: "Montserrat_600SemiBold",
     fontSize: 35,
   },
-  legendText: {
-    fontFamily: "Montserrat_400Regular",
-    fontSize: 12,
-  }
 });
