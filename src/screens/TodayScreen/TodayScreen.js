@@ -188,13 +188,18 @@ export default function TodayScreen(props) {
   } else {
     return (
       <View style={styles.container}>
-        <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
-        <Text style={styles.goalText}>{userGoals[randomGoal]}</Text>
-        <Text style={styles.taskText}>
-          {goalTasks.tasks[goalTasks.randomTask]}
-        </Text>
-        {completionComponent}
+        <View style={styles.goalBox}></View>
+        <View style={styles.taskBox}></View>
+        <View style={styles.completionBox}></View>
       </View>
+      // <View style={styles.container}>
+      //   <Text style={styles.titleText}>Today's{"\n"}Doable</Text>
+      //   <Text style={styles.goalText}>{userGoals[randomGoal]}</Text>
+      //   <Text style={styles.taskText}>
+      //     {goalTasks.tasks[goalTasks.randomTask]}
+      //   </Text>
+      //   {completionComponent}
+      // </View>
     );
   }
 }

@@ -22,4 +22,19 @@ export default StyleSheet.create({
     backgroundColor: "#fff",
     padding: 50,
   },
+  goalBox: {
+    width: 50,
+    height: 50,
+    backgroundColor: "powderblue",
+  },
+  taskBox: {
+    width: 50,
+    height: 50,
+    backgroundColor: "skyblue",
+  },
+  completionBox: {
+    width: 50,
+    height: 50,
+    backgroundColor: "steelblue",
+  },
 });
