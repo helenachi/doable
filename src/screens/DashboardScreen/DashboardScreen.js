@@ -32,11 +32,17 @@ export default function DashboardScreen(props) {
     <>
       <Tab.Navigator
         tabBarOptions={{
-          activeTintColor: "#4a59a8",
-          showLabel: true,
+          // activeTintColor: "#ffffff",
+          inactiveTintColor: "black",
+          activeBackgroundColor: "#ffffff",
+          showLabel: false,
           style: {
             backgroundColor: "#FEC169",
             height: 100,
+          },
+          tabStyle: {
+            borderBottomStartRadius: 75,
+            borderBottomEndRadius: 75,
           },
         }}
         initialRouteName="Today"

@@ -2,17 +2,17 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   titleText: {
-    fontSize: 40,
-    color: "#333333",
+    fontSize: 54,
+    color: "#000000",
     fontFamily: "Montserrat_600SemiBold",
   },
   goalText: {
-    fontSize: 15,
+    fontSize: 20,
     color: "#333333",
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Montserrat_600SemiBold",
   },
   taskText: {
-    fontSize: 25,
+    fontSize: 21,
     color: "#333333",
     fontFamily: "Montserrat_400Regular",
   },
@@ -20,7 +20,6 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     backgroundColor: "#fff",
-    padding: 30,
-    margin: 20,
+    padding: 50,
   },
 });
