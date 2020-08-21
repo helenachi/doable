@@ -33,6 +33,11 @@ export default function DashboardScreen(props) {
       <Tab.Navigator
         tabBarOptions={{
           activeTintColor: "#4a59a8",
+          showLabel: true,
+          style: {
+            backgroundColor: "#FEC169",
+            height: 100,
+          },
         }}
         initialRouteName="Today"
       >
@@ -41,7 +46,7 @@ export default function DashboardScreen(props) {
           component={GoalComponent}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-star-outline" size={20} color="gray" />
+              <Ionicons name="ios-star-outline" size={35} color="black" />
             ),
           }}
         />
@@ -52,8 +57,8 @@ export default function DashboardScreen(props) {
             tabBarIcon: ({ color, size }) => (
               <Ionicons
                 name="ios-checkmark-circle-outline"
-                size={20}
-                color="gray"
+                size={35}
+                color="black"
               />
             ),
           }}
@@ -63,7 +68,7 @@ export default function DashboardScreen(props) {
           component={CalendarComponent}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ios-calendar" size={20} color="gray" />
+              <Ionicons name="ios-calendar" size={35} color="black" />
             ),
           }}
         />

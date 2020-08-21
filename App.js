@@ -88,14 +88,25 @@ export default function App() {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Dashboard"
+          name=" "
           options={{
+            headerStyle: {
+              height: 100,
+            },
             headerLeft: () => (
-              <Image source={require("./assets/happy_hour_logo.png")} style={{height: 20, width: 20, margin: 10}} />
+              <Image
+                source={require("./assets/happy_hour_logo.png")}
+                style={{ height: 42, width: 33, margin: 20 }}
+              />
             ),
             headerRight: () => (
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Ionicons name="ios-settings" size={20} color="gray" style={{height: 20, width: 20, margin: 10}} />
+                <Ionicons
+                  name="ios-settings"
+                  size={30}
+                  color="gray"
+                  style={{ height: 30, width: 30, margin: 10 }}
+                />
               </TouchableOpacity>
             ),
           }}
