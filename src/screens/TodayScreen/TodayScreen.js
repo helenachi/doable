@@ -39,10 +39,9 @@ export default function TodayScreen(props) {
    */
   const [completionStatus, setCompletionStatus] = useState(0);
   const [completionComponent, setCompletionComponent] = useState(null);
-  const doableMaxDuration = 20000;
+  const doableMaxDuration = 3600000;
 
   const [stopwatchActive, setStopwatchActive] = useState(false);
-  const [filled, setFilled] = useState(props.user.fill);
 
   useEffect(() => {
     if (loading) {
@@ -112,7 +111,7 @@ export default function TodayScreen(props) {
     firebaseUser.update({
       [`${doableToUpdate}`]: true,
       completed: true,
-      fill: filled,
+      fill: props.user.fill,
     });
     props.user.completed = true;
   };
@@ -133,7 +132,7 @@ export default function TodayScreen(props) {
             .collection("users")
             .doc(props.user.id);
           firebaseUser.update({
-            fill: filled,
+            fill: props.user.fill,
           });
         }}
       >
@@ -141,7 +140,7 @@ export default function TodayScreen(props) {
           size={120}
           width={15}
           fill={100}
-          prefill={filled}
+          prefill={props.user.fill}
           rotation={0}
           tintColor="#EA6648"
           onAnimationComplete={() => console.log("onAnimationComplete")}
@@ -150,7 +149,7 @@ export default function TodayScreen(props) {
           duration={doableMaxDuration}
         >
           {(fill) => {
-            setFilled(Math.round(fill));
+            props.user.fill = fill;
             return <Text style={styles.points}>{fillToTime(fill)}</Text>;
           }}
         </AnimatedCircularProgress>
